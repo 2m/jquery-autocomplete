@@ -315,7 +315,7 @@
      * Activate autocompleter immediately
      */
     $.Autocompleter.prototype.activateNow = function() {
-        var value = this.dom.$elem.val();
+        var value = this.beforeUseConvertor(this.dom.$elem.val());
         if (value !== this.lastProcessedValue_ && value !== this.lastSelectedValue_) {
             if (value.length >= this.options.minChars) {
                 this.lastProcessedValue_ = value;
@@ -558,6 +558,14 @@
         return s;
     };
 
+    $.Autocompleter.prototype.beforeUseConvertor = function(s, a, b) {
+        var convertor = this.options.beforeUseConvertor;
+        if ($.isFunction(convertor)) {
+            s = convertor(s, a, b);
+        }
+        return s;
+    };
+
     $.Autocompleter.prototype.showResults = function(results, filter) {
         var numResults = results.length;
         if (numResults === 0) {
@@ -705,7 +713,7 @@
         if (this.keyTimeout_) {
             clearTimeout(this.keyTimeout_);
         }
-        if (this.dom.$elem.val() !== this.lastSelectedValue_) {
+        if (this.beforeUseConvertor(this.dom.$elem.val()) !== this.lastSelectedValue_) {
             if (this.options.mustMatch) {
                 this.dom.$elem.val('');
             }
@@ -792,7 +800,8 @@
         onItemSelect: null,
         onNoMatch: null,
         onFinish: null,
-        matchStringConvertor: null
+        matchStringConvertor: null,
+        beforeUseConvertor: null
     };
 
 })(jQuery);

@@ -169,6 +169,13 @@ preventDefaultReturn  (default value: true)
 
 preventDefaultTab  (default value: false)
 	Whether or not to prevent the default behavior of the Tab key when this is used to select an item. Tab will usually jump to the next input field of the form.
+    
+matchStringConvertor  (default value: null)
+    A javascript function which is used to convert the input value and the results before conparing them.
+    Can be used to implement accent folding. Only used when filterResults is set to true.
+
+beforeUseConvertor  (default value: null)
+    A JavaScript function which is used to convert the input value before using it.
 
 
 More advanced options :

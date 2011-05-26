@@ -693,8 +693,8 @@
         var value = $li.data('value');
         var data = $li.data('data');
         var displayValue = this.displayValue(value, data);
-        this.lastProcessedValue_ = displayValue;
-        this.lastSelectedValue_ = displayValue;
+        this.lastProcessedValue_ = this.beforeUseConvertor(displayValue);
+        this.lastSelectedValue_ = this.beforeUseConvertor(displayValue);
         this.dom.$elem.val(displayValue).focus();
         this.setCaret(displayValue.length);
         this.callHook('onItemSelect', { value: value, data: data });

@@ -297,6 +297,11 @@
      * Set timeout to activate autocompleter
      */
     $.Autocompleter.prototype.activate = function() {
+    
+        if (!this.predicateToStart()) {
+            return;
+        }
+    
         var self = this;
         var activateNow = function() {
             self.activateNow();
@@ -565,6 +570,14 @@
         }
         return s;
     };
+    
+    $.Autocompleter.prototype.predicateToStart = function() {
+        var predicateFunction = this.options.predicateToStart;
+        if ($.isFunction(predicateFunction)) {
+            return predicateFunction();
+        }
+        return true;
+    };
 
     $.Autocompleter.prototype.showResults = function(results, filter) {
         var numResults = results.length;
@@ -801,7 +814,8 @@
         onNoMatch: null,
         onFinish: null,
         matchStringConvertor: null,
-        beforeUseConvertor: null
+        beforeUseConvertor: null,
+        predicateToStart: null
     };
 
 })(jQuery);
